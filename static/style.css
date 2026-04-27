@@ -1,0 +1,38 @@
+body{
+font-family:Poppins;
+background:linear-gradient(#ff7a00,#ffb347);
+}
+
+.titulo{
+font-family:'Bebas Neue';
+font-size:50px;
+text-align:center;
+color:white;
+}
+
+.layout{
+display:grid;
+grid-template-columns:20% 80%;
+}
+
+.categorias button{
+display:block;
+margin:10px;
+padding:10px;
+background:#ff7a00;
+color:white;
+border:none;
+}
+
+.productos{
+display:grid;
+grid-template-columns:repeat(auto-fill,150px);
+gap:10px;
+}
+
+.card{
+background:white;
+padding:15px;
+cursor:pointer;
+text-align:center;
+}

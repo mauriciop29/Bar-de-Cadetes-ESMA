@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bar ESMA</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="titulo">Bar de Cadetes</h1>
+
+<input id="cliente" placeholder="Nombre">
+<input id="correo" placeholder="Correo">
+
+<div class="layout">
+
+<div class="categorias">
+{% for cat in productos %}
+<button onclick="mostrar('{{cat}}')">{{cat}}</button>
+{% endfor %}
+</div>
+
+<div class="productos" id="productos"></div>
+
+</div>
+
+<form id="f" method="POST" style="display:none;">
+<input name="cliente" id="f1">
+<input name="correo" id="f2">
+<input name="producto" id="f3">
+<input name="cantidad" id="f4">
+<input name="precio" id="f5">
+</form>
+
+</div>
+
+<script>
+const data={{productos|tojson}};
+
+function mostrar(c){
+let cont=document.getElementById("productos");
+cont.innerHTML="";
+for(let p in data[c]){
+let d=document.createElement("div");
+d.className="card";
+d.innerHTML=`<h3>${p}</h3><p>$${data[c][p]}</p>`;
+d.onclick=()=>sel(p,data[c][p]);
+cont.appendChild(d);
+}
+}
+
+function sel(p,pr){
+let n=document.getElementById("cliente").value;
+let c=document.getElementById("correo").value;
+if(!n||!c){alert("datos");return;}
+let cant=prompt("cantidad","1");
+document.getElementById("f1").value=n;
+document.getElementById("f2").value=c;
+document.getElementById("f3").value=p;
+document.getElementById("f4").value=cant;
+document.getElementById("f5").value=pr;
+document.getElementById("f").submit();
+}
+
+document.getElementById("cliente").addEventListener("blur",()=>{
+fetch("/get_cliente/"+document.getElementById("cliente").value)
+.then(r=>r.json()).then(d=>{if(d.correo)document.getElementById("correo").value=d.correo})
+})
+</script>
+
+</body>
+</html>
